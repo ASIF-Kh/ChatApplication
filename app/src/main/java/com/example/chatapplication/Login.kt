@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.provider.ContactsContract.CommonDataKinds.Email
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 
@@ -43,6 +44,16 @@ class Login : AppCompatActivity() {
     }
 
     private fun login(email: String, password: String){
-        
+        mAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    //code for jumping to home activity
+                    val intent = Intent(this@Login, MainActivity::class.java)
+                    startActivity(intent)
+
+                } else {
+                    Toast.makeText(this@Login, "Some error occured", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 }
